@@ -1,0 +1,630 @@
+/* Landingpage Familie Maeder: Empfang mit vier Türen, Brief, je Haus ein Fenster und eine Bühne mit sieben Stücken, Schluss.
+   Alles auf einer Seite. Bewegt wird nur über transform und opacity, der Scroll bleibt nativ.
+   Knöpfe, Fenster-Rahmen, Telefon und Leiste kommen aus werkbank.css. */
+[hidden]{display:none!important}
+.leiste{transform:none;animation:none}
+/* Leiste oben: dunkler Lack, feine doppelte Kante in Creme, heller Knopf mit Knauf */
+.insel{height:68px;padding:0 10px 0 28px;gap:clamp(16px,2vw,34px);background:linear-gradient(180deg,#20233f 0%,#14162a 46%,#0c0d19 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.6),inset 0 0 0 1px rgba(235,219,206,.26),0 0 0 5px rgba(12,13,25,.72),0 0 0 6px rgba(235,219,206,.2),0 30px 44px -22px rgba(0,0,0,.9)}
+.insel__m b{font-size:1.06rem;letter-spacing:.2em}
+.insel__m span{color:var(--creme);border-left-color:rgba(235,219,206,.3);padding-left:16px;letter-spacing:.2em}
+.insel nav{gap:clamp(14px,1.9vw,30px)}
+.insel nav a{font-size:12px;letter-spacing:.16em;color:rgba(255,255,255,.7)}
+.insel nav a::after{background:var(--creme);bottom:2px}
+.insel__kn{height:48px;flex:none}
+@media(max-width:620px){.insel{height:58px;padding:0 7px 0 18px;gap:12px}.insel__kn{height:44px;padding-left:16px;font-size:10px;gap:8px}.insel__kn span{display:none}.insel__kn i{width:30px;height:30px}.insel__m span{letter-spacing:.14em}}
+
+/* Rahmen um jede Aufnahme einer Seite: heller Rand, feine Kante, tiefer Schatten. Hebt das Bild vom Muster ab */
+.rah{display:block;padding:7px;border-radius:22px;background:rgba(255,255,255,.14);background:color-mix(in srgb,var(--hn,#111421) 74%,#ffffff);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.4),0 0 0 1px rgba(235,219,206,.34),0 4px 0 rgba(0,0,0,.34),0 64px 70px -34px rgba(0,0,0,.95),0 24px 34px -18px rgba(0,0,0,.8)}
+.rah img{display:block;width:100%;height:auto;border-radius:15px;box-shadow:0 0 0 1px rgba(0,0,0,.5)}
+html:not(.js) .z>span{transform:none}
+
+/* ---------- Räume ---------- */
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.raum{position:relative;display:grid;min-height:100vh;min-height:100svh;padding:clamp(96px,12.4vh,120px) var(--rand) clamp(22px,3.4vh,36px)}
+.raum>.in{width:100%;display:grid;min-width:0;min-height:0}
+.offen .z>span{transform:none}
+.js .raum:not(.offen) .z>span{transition:none}
+.js [data-e]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--e2),transform 1.2s var(--e1);transition-delay:calc(var(--i,0)*90ms + .12s)}
+.js [data-e="schweb"]{transform:translateY(84px) scale(.95);transition:opacity .8s var(--e2),transform 1.25s var(--e1);transition-delay:calc(var(--i,0)*120ms + .2s)}
+.js .offen [data-e]{opacity:1;transform:none}
+.js .raum:not(.offen) [data-e]{transition:none}
+
+/* ---------- Fenster vor jedem Haus: das Bild steht, die Seite zieht darüber ---------- */
+.bruch{position:relative;min-height:min(62vh,620px);clip-path:inset(0);background:var(--hn);color:#ffffff;overflow:hidden}
+.bruch>img{position:fixed;left:0;top:-22vh;width:100%;height:144vh;height:calc(100lvh + 44vh);object-fit:cover;will-change:transform}
+.bruch .in{position:fixed;left:0;right:0;top:50%;width:auto;max-width:calc(var(--max) + 2*var(--rand));margin:0 auto;padding:0 var(--rand);transform:translateY(-50%);display:grid;justify-items:center;text-align:center}
+.bruch__z{display:block;height:clamp(54px,8vh,92px);width:auto;max-width:70vw;color:#f6ecdb;margin-bottom:clamp(16px,2.4vh,26px)}
+.bruch__s{width:100%;font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(1.8rem,4.3vw,4.5rem);line-height:1.1;text-shadow:0 2px 26px rgba(4,8,18,.62)}
+.bruch__s .z{padding-inline:.5em;margin-inline:-.5em}
+.js .bruch:not(.nah)>*{visibility:hidden}
+/* Fenster vor der gemeinsamen Startseite: vier Häuser nebeneinander, jedes Zeichen über seinem Haus (Robert 17.10.2026) */
+.bruch>.vb{position:fixed;left:0;top:-17vh;width:100%;height:134vh;height:calc(100lvh + 34vh);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:100%;column-gap:clamp(3px,.3vw,5px);background:#111421;will-change:transform}
+.bruch>.vb img{display:block;width:100%;height:100%;object-fit:cover}
+.vier.vier--spalten{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));justify-items:center;width:100vw;margin-inline:calc(50% - 50vw)}
+.vier--spalten .vier__z{max-width:62%}
+@media(max-width:760px){
+  .bruch>.vb{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));row-gap:3px}
+  .vier.vier--spalten{display:flex;width:auto;margin-inline:0}
+}
+@media(max-width:760px){.bruch{min-height:54svh}}
+
+/* ---------- Pfeile ---------- */
+.gang__k{display:flex;align-items:center;gap:12px;flex:none}
+.gang__k .kn{min-width:0}
+.gang__k .kn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rund{flex:none;width:54px;height:54px;padding:0;border:0;cursor:pointer;border-radius:50%;display:grid;place-items:center;color:#ffffff;
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -2px 0 rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.07),0 16px 22px -14px rgba(0,0,0,.75);
+  transition:transform .6s var(--e2)}
+.rund:hover{transform:translateY(-2px)}
+.rund:active{transform:translateY(1px) scale(.97)}
+.rund svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.3}
+.rund--gross{position:relative;width:62px;height:62px;color:var(--tinte);background:linear-gradient(180deg,#fdfaf5,#efe6dc 55%,#e3d5c8);
+  box-shadow:inset 0 1px 0 #ffffff,inset 0 -3px 0 rgba(126,90,61,.4),0 2px 2px rgba(0,0,0,.3),0 22px 28px -14px rgba(0,0,0,.85)}
+.rund--gross svg{width:19px;height:19px;stroke-width:1.7}
+.rund--gross:hover{transform:translateY(-2px) scale(1.05)}
+.rund--gross:active{transform:translateY(1px) scale(.96)}
+.rund--vor::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px #f6ecdb;opacity:0;pointer-events:none}
+.offen .rund--vor::after{animation:ruf 1.5s var(--e2) 2.2s 3}
+@keyframes ruf{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.7)}}
+.hell .rund{color:var(--tinte);background:linear-gradient(180deg,#fefdfb,#efe8e0);box-shadow:inset 0 1px 0 #ffffff,inset 0 -2px 0 rgba(126,90,61,.28),0 16px 22px -14px rgba(84,58,37,.5)}
+.schluss-gang{display:flex;justify-content:flex-end;align-items:center;gap:20px;padding-top:clamp(14px,2vh,22px)}
+.schluss-gang--linie{justify-content:flex-end;border-top:1px solid rgba(235,219,206,.2);color:rgba(255,255,255,.6)}
+.schluss-gang--linie .mono{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 28px;font-size:11.5px}
+
+/* ---------- Empfang: Gruss und Titel mittig, darunter die vier neuen Startseiten in einer Reihe ---------- */
+.raum--empfang{background:var(--nacht);padding-bottom:calc(var(--rund) + clamp(26px,4vh,46px));overflow:hidden}
+.empf__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0}
+.empf .t1,.empf .lauf{text-shadow:0 2px 26px rgba(8,10,20,.7)}
+.empf{grid-template-rows:minmax(0,1fr) auto;gap:clamp(26px,4.4vh,50px)}
+.empf__k{display:grid;justify-items:center;align-content:center;text-align:center}
+.empf .t1{font-size:clamp(2.3rem,min(6vw,10vh),6.2rem);width:100%}
+.empf .gruss{justify-content:center;margin-bottom:clamp(14px,2.2vh,26px);font-size:clamp(1.22rem,1.75vw,1.8rem);color:var(--creme)}
+.empf .gruss::after{content:'';width:clamp(40px,5vw,84px);height:1px;background:currentColor;opacity:.75}
+.empf .lauf{font-size:clamp(1rem,1.14vw,1.17rem);line-height:1.62;max-width:66ch;margin-top:clamp(16px,2.4vh,26px);text-wrap:balance;color:rgba(255,255,255,.88)}
+.empf .kn-reihe{margin-top:clamp(18px,2.6vh,28px);justify-content:center}
+.schau{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,24px);align-items:start}
+.schau>div{min-width:0}
+.schau__f{display:grid;gap:clamp(10px,1.4vh,16px);justify-items:center;color:#ffffff;transition:transform 1s var(--e1)}
+.schau__f:hover{transform:translateY(-8px)}
+.schau__f:active{transform:translateY(-3px) scale(.994)}
+.schau__f .rah{width:100%;padding:5px;border-radius:17px}
+.schau__f .rah img{border-radius:12px}
+.schau__f b{font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(1rem,1.3vw,1.32rem);line-height:1.15;text-align:center;color:rgba(255,255,255,.92)}
+@media(max-width:860px){
+  .schau{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
+  .empf .lauf{text-wrap:pretty}
+}
+
+/* ---------- Brief ---------- */
+.raum--brief{background:var(--papier);color:var(--tinte);min-height:0;margin-top:calc(var(--rund)*-1);border-radius:var(--rund) var(--rund) 0 0;padding-top:var(--abschnitt);padding-bottom:var(--abschnitt)}
+.raum--brief .brief{align-items:center}
+.raum--brief .t2{font-size:clamp(2.2rem,4.5vw,4.7rem)}
+.raum--brief .brief .lauf{font-size:clamp(1.06rem,1.24vw,1.26rem);margin-top:clamp(22px,2.8vw,40px);max-width:52ch}
+.wort{max-width:640px}
+.wort__t{font-size:clamp(1.06rem,1.24vw,1.26rem);line-height:1.64;color:rgba(20,21,31,.84)}
+.wort__b{float:left;width:clamp(96px,8vw,124px);aspect-ratio:1;margin:6px clamp(18px,1.8vw,26px) 4px 5px;border-radius:50%;overflow:hidden;shape-outside:circle(50%);shape-margin:14px;
+  box-shadow:0 0 0 5px #ffffff,0 0 0 6px rgba(31,33,59,.16),0 20px 26px -14px rgba(84,58,37,.6)}
+.wort__b img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.wort__n{clear:both;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 16px;margin-top:clamp(16px,1.8vw,24px);padding-top:14px;border-top:1px solid rgba(31,33,59,.17)}
+.wort__n b{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,2vw,2rem);line-height:1.2}
+.wort__n span{font-size:1.04rem;color:rgba(20,21,31,.72)}
+.raum--brief .brief__r{position:relative;top:auto;gap:clamp(24px,3vw,40px)}
+
+/* ---------- Bühne eines Hauses ---------- */
+/* ein Sprung zu einem Haus landet auf der Bühne, ihre Oberkante am oberen Rand (die Leiste liegt über dem freien Kopf der Bühne) */
+.raum--haus{scroll-margin-top:-96px}
+.raum--haus{margin-top:calc(var(--rund)*-1);border-radius:var(--rund) var(--rund) 0 0;background-color:var(--hn);background-position:50% 0;background-size:var(--hb,100px) auto;color:#ffffff}
+.hausr{grid-template-columns:minmax(0,.6fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"t b" "g g";gap:clamp(16px,2.6vh,30px) clamp(30px,4.6vw,80px)}
+.hausr__t{grid-area:t;align-self:center;min-width:0}
+.hausr--r{grid-template-columns:minmax(0,1fr) minmax(0,.6fr);grid-template-areas:"b t" "g g"}
+.hausr__z{display:block;height:clamp(44px,6.6vh,74px);width:auto;max-width:60%;color:var(--hg);margin-bottom:clamp(12px,2vh,22px)}
+.hausr h2{font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(2.3rem,4.05vw,4.2rem);line-height:1.06;letter-spacing:0}
+.hausr__o{margin-top:clamp(10px,1.6vh,16px);font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--hg)}
+.texte{display:grid;margin-top:clamp(16px,3vh,34px);padding-top:clamp(16px,2.8vh,30px);border-top:1px solid rgba(255,255,255,.2)}
+.st-t{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .28s var(--e2),transform .28s var(--e2),visibility 0s .28s}
+.st-t.an{opacity:1;visibility:visible;transform:none;transition:opacity .7s var(--e2) .2s,transform 1s var(--e1) .2s}
+.st-t .kap{font-family:var(--hf);font-weight:var(--hw,400);color:var(--hg);margin-bottom:clamp(8px,1.4vh,14px);font-size:clamp(1.05rem,1.3vw,1.3rem)}
+.st-t .kap b{font-weight:inherit}
+.st-t .lt{font-size:clamp(1.04rem,1.22vw,1.22rem);line-height:1.6;color:rgba(255,255,255,.84);max-width:38ch}
+.st-t .kn-reihe{margin-top:clamp(16px,2.6vh,28px)}
+
+/* Bühne: je Stück eine Auslage, alle liegen übereinander, eine ist zu sehen */
+.buehne-w{grid-area:b;position:relative;display:grid;min-width:0;min-height:0}
+.buehne{display:grid;min-width:0;min-height:0;container-type:size}
+.pf-handy{display:none}
+.st-b{grid-area:1/1;position:relative;display:block;min-width:0;min-height:0;margin:0;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(40px) scale(.985);
+  transition:opacity .3s var(--e2),transform .3s var(--e2),visibility 0s .3s}
+.st-b.an{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .75s var(--e2) .14s,transform 1.1s var(--e1) .14s}
+.st-b.weg{transform:translateY(-16px) scale(.99)}
+.st-b--website .rah{position:absolute;left:1cqw;top:46%;width:min(86cqw,(86cqh - 14px)*1.6);transform:translateY(-50%)}
+.st-b--website .tel{position:absolute;right:1cqw;bottom:2cqh;height:min(66cqh,46cqw);aspect-ratio:520/1150}
+.st-b--website .tel img{height:100%;width:100%;object-fit:cover}
+.st-b--werkbank{display:grid;place-items:center}
+.st-b--werkbank .rah{width:min(95cqw,(90cqh - 14px)*1.6)}
+.st-b--werkbank .rah,.st-b--website .rah{transition:transform .9s var(--e1)}
+.st-b--werkbank .rah:hover{transform:translateY(-6px)}
+.st-b--website .rah:hover{transform:translateY(calc(-50% - 6px))}
+.st-b--auslage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.st-b--feed{display:flex;align-items:center;justify-content:center;gap:5cqw}
+.st-b--feed .tel{flex:none;height:min(95cqh,100cqw);aspect-ratio:720/1600}
+.st-b--feed .tel img{height:100%;width:100%;object-fit:cover}
+.fposts{flex:none;display:grid;grid-template-columns:repeat(2,auto);gap:1.6cqw;align-items:start}
+.fposts img{display:block;height:min(41cqh,28cqw);width:auto;aspect-ratio:3/4;object-fit:cover;border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 26px 30px -22px rgba(0,0,0,.9)}
+.fposts img:nth-child(even){transform:translateY(7cqh)}
+.fposts{margin-top:-7cqh}
+/* Material: drei Seiten des Entwurfs und das Zeichen, lose nebeneinander gelegt, keines verdeckt ein anderes */
+.st-b--mappe{display:grid;grid-template-columns:repeat(2,auto);gap:4.4cqh 3cqw;place-content:center;align-items:center}
+.st-b--mappe>img,.mp-z{display:block;width:min(43cqw,64cqh);height:auto;aspect-ratio:1280/800;border-radius:12px;box-shadow:0 0 0 1px rgba(235,219,206,.3),0 34px 36px -22px rgba(0,0,0,.95)}
+.st-b--mappe>img:nth-of-type(1){transform:rotate(-1.6deg)}
+.st-b--mappe>img:nth-of-type(2){transform:rotate(1.3deg) translateX(3%)}
+.st-b--mappe>img:nth-of-type(3){transform:rotate(-1deg) translateY(-3%)}
+.mp-z{display:grid;place-items:center;background:#f6efe2;color:var(--hn);transform:rotate(1.4deg) translateY(4%)}
+.mp-z svg{height:46%;width:auto;max-width:62%}
+
+/* Leiste der Stücke: sieben kleine Bilder zum Anklicken */
+.gang{grid-area:g;padding-top:clamp(12px,1.8vh,18px);border-top:1px solid rgba(255,255,255,.16)}
+.gang__h{display:flex;align-items:center;gap:16px;margin-bottom:clamp(10px,1.5vh,14px);font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(1rem,1.14vw,1.16rem);letter-spacing:0;text-transform:none;color:var(--hg);color:color-mix(in srgb,var(--hg) 76%,#ffffff)}
+.gang__h::after{content:'';flex:none;width:clamp(40px,5vw,84px);height:1px;background:currentColor;opacity:.7}
+.leistchen{display:flex;gap:clamp(8px,1vw,16px);min-width:0;align-items:flex-start}
+.lk{flex:1 1 0;min-width:0;max-width:142px;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:grid;gap:9px;transition:transform .8s var(--e1)}
+.lk:hover{transform:translateY(-4px)}
+/* die zwei Pfeile stehen rechts neben den kleinen Bildern, auf deren Höhe */
+.lk-pf{flex:1 1 0;min-width:0;max-width:142px;margin-left:auto}
+.lk-pf>div{aspect-ratio:4/3;display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.lk-pf .rund--gross{width:min(62px,46%);height:auto;aspect-ratio:1}
+.lk__b{position:relative;display:block;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.25);box-shadow:0 0 0 1px rgba(255,255,255,.24),0 16px 20px -16px rgba(0,0,0,.8)}
+.lk.an .lk__b{box-shadow:0 0 0 2.5px var(--hg),0 22px 26px -16px rgba(0,0,0,.95)}
+.lk__b img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--e1)}
+.lk:hover .lk__b img{transform:scale(1.06)}
+.lk b{display:block;font-family:var(--mono);font-weight:400;font-size:11.5px;line-height:1.35;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.92);overflow-wrap:break-word}
+.lk.an b{color:var(--hg);color:color-mix(in srgb,var(--hg) 76%,#ffffff)}
+
+@media(max-width:1039px){
+  .raum--haus{min-height:0;padding-bottom:clamp(40px,8vw,70px)}
+  .hausr,.hausr--r{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-template-areas:"t" "b" "x" "h" "l";gap:16px}
+  .hausr__z{height:40px;margin-bottom:10px}
+  .hausr__t{display:contents}
+  .hausr__kopf{grid-area:t}
+  .texte{grid-area:x;margin-top:0;padding-top:18px}
+  .buehne{aspect-ratio:1/.8;width:100%;max-height:62svh}
+  .gang{display:contents}
+  .gang__h{grid-area:h;margin:0}
+  .pf-handy{display:flex;justify-content:flex-end;gap:12px;margin-top:12px}
+  .pf-handy .rund--gross{width:54px;height:54px}
+  .buehne-w{grid-template-rows:auto auto}
+  .lk-pf{display:none}
+  .leistchen{grid-area:l;overflow-x:auto;scrollbar-width:none;padding-top:0;border-top:0;margin:0 calc(var(--rand)*-1);padding-inline:var(--rand)}
+  .leistchen::-webkit-scrollbar{display:none}
+  .lk{flex:none;width:118px;max-width:none}
+}
+@media(min-width:1040px){.hausr__kopf{display:block}}
+
+/* Die gemeinsame Startseite: ein Raum mit einem Stück, ohne Leiste; die vier Zeichen stehen in einer Reihe */
+.vier{display:flex;align-items:center;justify-content:center;gap:clamp(18px,2.6vw,40px);color:#f6ecdb;margin-bottom:clamp(16px,2.4vh,26px)}
+.vier__z{display:block;height:clamp(30px,4.4vh,50px);width:auto;max-width:18vw}
+.vier--klein{justify-content:flex-start;gap:clamp(12px,1.6vw,22px);color:var(--hg);margin-bottom:clamp(12px,2vh,22px)}
+.vier--klein .vier__z{height:clamp(24px,3.4vh,36px);max-width:22%}
+.raum--familie .hausr{grid-template-rows:minmax(0,1fr);grid-template-areas:"t b"}
+.hz--vier{display:flex;align-items:center;gap:4px;color:var(--hg);color:color-mix(in srgb,var(--hg) 64%,#ffffff)}
+.hz--vier svg{display:block;height:clamp(16px,1.6vw,22px);width:auto;max-width:25%;fill:currentColor}
+@media(max-width:1039px){.raum--familie .hausr{grid-template-areas:"t" "b" "x"}.vier{justify-content:center}.vier--klein{justify-content:flex-start}}
+/* Knopf «Startseite ansehen» mittig unter dem Text und tiefer (Robert 17.10.2026: «mittiger etwas und tiefer») */
+@media(min-width:1040px){.raum--familie .st-t .kn-reihe{justify-content:center;margin-top:clamp(40px,7vh,72px)}}
+
+/* ---------- Gespräch ---------- */
+.raum--gespraech{background:var(--tief);min-height:0;padding-top:var(--abschnitt);padding-bottom:clamp(28px,4vh,44px)}
+.raum--gespraech .schluss-gang{margin-top:clamp(50px,8vh,96px)}
+.gesp{grid-template-rows:minmax(0,1fr) auto;gap:clamp(20px,3vh,36px)}
+.gesp__k{display:grid;gap:clamp(34px,5vw,96px);align-items:center;align-content:center}
+.gesp .t1{font-size:clamp(2.5rem,5.9vw,6.2rem)}
+.gesp .lauf{margin-top:clamp(18px,2.6vh,30px);max-width:48ch}
+.gesp .gruss-u{margin-top:clamp(22px,3vh,36px)}
+/* Robert im Schluss wie beim Rivage-Brief: rundes Bild rechts im Text, Unterschrift rechtsbündig (Robert 17.10.2026: «Da bitte auch ein Bild von mir einbauen») */
+.gesp__k>div:first-child{max-width:780px}
+.gesp .lauf{max-width:none}
+.gesp__ich{float:right;width:clamp(104px,8.6vw,150px);aspect-ratio:1;margin:4px 6px 6px clamp(18px,1.8vw,28px);border-radius:50%;overflow:hidden;shape-outside:circle(50%);shape-margin:16px;
+  box-shadow:0 0 0 5px #111421,0 0 0 6px rgba(235,219,206,.34),0 24px 30px -16px rgba(0,0,0,.8)}
+.gesp__ich img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.gesp .gruss-u{flex-direction:column;align-items:flex-end;text-align:right;gap:4px}
+/* Unterschrift wie im Rivage-Brief: Gruss klein, handschriftlich leicht gedreht, darunter Name und Ort klein (Robert 17.10.2026: grosse Zeile «sieht nicht schön aus») */
+.gesp .gruss-u .gesp__g{font-size:clamp(1rem,1.1vw,1.12rem);color:rgba(255,255,255,.74)}
+.gesp__sig{display:block;width:clamp(150px,14vw,220px);height:auto;margin:2px -4px 2px 0;transform:rotate(-5deg);pointer-events:none}
+.gesp .gruss-u b{font-size:clamp(1.05rem,1.2vw,1.2rem);font-weight:500;letter-spacing:0}
+@media(max-width:600px){.gesp__ich{width:96px;shape-margin:12px}}
+.gesp .gruss-u small{color:var(--messing)}
+.gesp .kn-reihe{margin-top:clamp(22px,3vh,34px)}
+@media(min-width:1000px){.gesp__k{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}}
+.hl{display:grid}
+.hl a{display:grid;grid-template-columns:clamp(46px,4.6vw,64px) minmax(0,1fr) auto;align-items:center;gap:clamp(14px,1.6vw,24px);padding:clamp(16px,2.9vh,28px) 0;border-top:1px solid rgba(235,219,206,.2);color:#ffffff}
+.hl a:last-child{border-bottom:1px solid rgba(235,219,206,.2)}
+.hl svg.hz{display:block;width:100%;height:clamp(30px,3.4vw,44px);color:var(--hg);color:color-mix(in srgb,var(--hg) 64%,#ffffff)}
+.hl b{display:block;font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(1.25rem,1.9vw,1.85rem);line-height:1.15}
+.hl small{display:block;margin-top:4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.hl i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));box-shadow:inset 0 1px 0 rgba(255,255,255,.24),inset 0 -2px 0 rgba(0,0,0,.34);transition:transform .7s var(--e2)}
+.hl a:hover i{transform:translateX(4px)}
+.hl i svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.3}
+
+/* Leiste: am Handy bleibt nur Marke und Knopf (werkbank.css), am Rechner zeigt sie das Haus, in dem man steht */
+@media(prefers-reduced-motion:reduce){
+  .js [data-e],.z>span,.st-b,.st-t,.tuer,.tuer__b img{transition:none!important}
+  .bruch>img,.bruch>.vb,.bruch .in{position:absolute}
+  .bruch>img,.bruch>.vb{top:0;height:100%}
+  .bruch .in{top:50%}
+}
+@media(max-height:760px) and (min-width:1040px){
+  .hausr__z{height:38px;margin-bottom:10px}
+  .hausr h2{font-size:clamp(2rem,3.5vw,3.3rem)}
+  .lk,.lk-pf{max-width:104px}
+  .lk{gap:6px}
+  .lk b{font-size:10px}
+  .gang__h{display:none}
+  .raum--haus,.raum--empfang{padding-top:92px}
+}
+
+/* ===================== Fassung 17.10.2026 (Feedback eines Inhabers): Warum, Rechner, «Wenn Sie mehr sehen möchten», Gespräch, Impressum =====================
+   Nur transform und opacity bewegt, keine Weichzeichner über Bewegtem, keine Kachel-Raster: Funde als Zeilen mit Linie, Rechner als ein Blatt. */
+.karte3.gut ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:16px}
+.karte3.gut li{display:grid;gap:3px;padding-top:14px;border-top:1px solid rgba(235,219,206,.2)}
+.karte3.gut li b{font-family:var(--serif);font-weight:500;font-size:1.08rem;color:var(--creme)}
+.karte3.gut li span{color:rgba(255,255,255,.8);font-size:1rem;line-height:1.55}
+.wort__t{font-family:var(--serif);font-weight:400}
+
+.raum--warum{background:var(--nacht);color:#ffffff;min-height:0;margin-top:calc(var(--rund)*-1);border-radius:var(--rund) var(--rund) 0 0;padding-top:var(--abschnitt);padding-bottom:var(--abschnitt)}
+.wr{gap:clamp(40px,5.4vw,84px)}
+/* «Was es Ihren Häusern bringt» (Robert 17.10.2026: «komplett anders, luxuriöser, eleganter, edler»): Titel mittig, der Preisvergleich als Platte
+   mit zwei echten Handy-Aufnahmen, darunter drei Funde als Kacheln mit Beleg. Grosse Zahlen zählen hoch (atelier.js). Auftritte nur über transform. */
+.js .raum--warum [data-e]{opacity:1;transition:transform 1.25s var(--e1);transition-delay:calc(var(--i,0)*90ms + .1s)}
+.wr__k{justify-items:center;text-align:center}
+.wr__k .lauf{margin:clamp(20px,2.6vw,34px) auto 0;max-width:60ch;color:rgba(255,255,255,.84)}
+.gz{display:flex;align-items:baseline;gap:clamp(10px,1vw,16px);margin:0;max-width:none}
+.gz b{display:inline-block;font-family:var(--serif);font-weight:300;font-size:clamp(3.6rem,5.6vw,5.8rem);line-height:.92;letter-spacing:-.05em;font-variant-numeric:tabular-nums lining-nums;color:var(--creme)}
+.gz span{max-width:13ch;font-size:clamp(.98rem,1.06vw,1.08rem);line-height:1.3;color:rgba(255,255,255,.74)}
+/* Preisvergleich */
+.preis{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);align-items:center;gap:clamp(30px,4vw,72px);
+  margin-top:clamp(56px,7vw,110px);padding:clamp(30px,4.4vw,76px);border-radius:clamp(28px,3vw,46px);background:linear-gradient(180deg,#22254a 0%,#191b33 52%,#121427 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(235,219,206,.2),0 0 0 6px rgba(12,13,25,.6),0 0 0 7px rgba(235,219,206,.12),0 60px 80px -40px rgba(0,0,0,.9)}
+.preis__t h3{font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,3.7vw,3.9rem);line-height:1.04;letter-spacing:-.03em;color:#ffffff}
+.preis__z{display:grid;grid-template-columns:auto auto;justify-content:start;gap:clamp(22px,3vw,52px);margin-top:clamp(28px,3.4vw,52px);padding:clamp(22px,2.6vw,34px) 0;border-top:1px solid rgba(235,219,206,.24);border-bottom:1px solid rgba(235,219,206,.24)}
+.preis__z .gz{flex-direction:column;align-items:flex-start;gap:12px}
+.preis__z .gz b{font-size:clamp(4.4rem,8vw,8.6rem)}
+.preis__z .gz span{max-width:17ch}
+.gz--leise b{color:rgba(235,219,206,.5)}
+.gz--gold b{background:linear-gradient(180deg,#f6e7cd 0%,#e2c38f 58%,#b98f55 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.preis__s{margin-top:clamp(20px,2.2vw,30px);max-width:44ch;font-size:clamp(1.04rem,1.14vw,1.16rem);line-height:1.62;color:rgba(255,255,255,.84)}
+.raum--warum small{display:block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,219,206,.66)}
+.preis__b{position:relative;display:flex;justify-content:center;align-items:flex-start;padding-bottom:10px}
+/* Zwei 3D-iPhones (Blender), schweben nacheinander von unten herauf, gross und deckend */
+.preis__b{align-items:flex-end;padding-bottom:0}
+.ph3{position:relative;margin:0;width:min(52%,330px);display:grid;justify-items:center;gap:6px}
+.ph3 img{display:block;width:100%;height:auto}
+.ph3--links{z-index:1;margin-right:-7%;margin-bottom:6%}
+.ph3--rechts{z-index:2;margin-bottom:-2%}
+.ph3 figcaption{margin-top:-4%;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,219,206,.78)}
+.js .raum--warum .ph3[data-e]{transform:translateY(160px) scale(.96);transition:transform 1.9s var(--e1);transition-delay:calc(var(--i,0)*160ms + .15s)}
+.js .raum--warum.offen [data-e="schweb"]:not(.da){transform:translateY(84px) scale(.95)}
+.js .raum--warum.offen .ph3[data-e]:not(.da){transform:translateY(160px) scale(.96)}
+.js .raum--warum [data-e="schweb"].da{transform:none}
+/* Drei Funde mit Beleg */
+.belege{list-style:none;margin:clamp(30px,3.4vw,52px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2vw,32px)}
+.bl{display:grid;align-content:start;padding:12px 12px clamp(26px,2.6vw,36px);border-radius:clamp(24px,2.4vw,34px);background:linear-gradient(180deg,#1f2240 0%,#171930 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(235,219,206,.16),0 46px 60px -36px rgba(0,0,0,.9)}
+.bl>*:not(.bl__b){margin-inline:clamp(12px,1.4vw,22px)}
+.bl__b{position:relative;margin:0 0 clamp(22px,2.2vw,32px);aspect-ratio:4/3;overflow:hidden;border-radius:clamp(16px,1.7vw,24px);display:grid;justify-items:center;align-items:start;
+  background:radial-gradient(120% 90% at 50% 0%,#33375f 0%,#23264a 55%,#1b1d38 100%);box-shadow:inset 0 0 0 1px rgba(235,219,206,.14)}
+.bl__b img{display:block;width:100%;height:auto}
+.bl__b--tel .tel{width:50%;margin-top:9%;border-radius:28px;padding:6px;transform:rotate(-2deg);transition:transform 1.2s var(--e1)}
+.bl__b--tel .tel img{border-radius:22px}
+.bl__b--rah{padding:9% 8% 0}
+.bl__b--rah .rah{width:100%;padding:5px;border-radius:16px;transition:transform 1.2s var(--e1)}
+.bl__b--rah .rah img{border-radius:11px}
+.bl:hover .bl__b .tel{transform:rotate(-2deg) translateY(-8px)}
+.bl:hover .bl__b .rah{transform:translateY(-8px)}
+.bl .gz b{font-size:clamp(3.4rem,4.6vw,4.8rem)}
+.bl .gz--wort b{font-size:clamp(2.6rem,3.5vw,3.7rem);letter-spacing:-.04em}
+.bl h3{margin-top:clamp(16px,1.6vw,22px);font-family:var(--serif);font-weight:500;font-size:clamp(1.16rem,1.32vw,1.34rem);line-height:1.25;color:#ffffff}
+.bl__s{margin-top:8px;font-size:clamp(.98rem,1.04vw,1.06rem);line-height:1.6;color:rgba(255,255,255,.8)}
+@media(max-width:899px){
+  .preis{grid-template-columns:minmax(0,1fr)}
+  .preis__b{max-width:560px;width:100%;justify-self:center}
+}
+@media(max-width:860px){.belege{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){
+  .preis{padding:28px 20px 34px}
+  .preis__z{grid-template-columns:1fr 1fr;gap:18px}
+  .preis__z .gz b{font-size:clamp(3.6rem,17vw,5rem)}
+  .ph3{width:54%}
+  .ph3 figcaption{font-size:10px;text-align:center}
+}
+
+/* Rechnung im Aufbau der Carlton-Werkbank (Robert 17.10.2026: «genauso übersichtlich wie beim Carlton»), Werte aus deren werkbank.css (.ag-blatt, .vt-*) */
+.raum--warum{--cs:'H carlton',Georgia,serif;--ct:#0c1526;--cg:#dcc68f}
+.ag-blatt{position:relative;margin-top:clamp(30px,3.4vw,52px);padding:clamp(28px,3.8vw,64px);border-radius:clamp(22px,2.4vw,34px);background:linear-gradient(rgba(251,246,234,.86),rgba(251,246,234,.86)),#fbf6ea url(../img/carlton-tapete-hell.webp?v=c929f6ca) 50% 0/900px auto;color:var(--ct);
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(150,125,64,.5),0 70px 90px -56px rgba(0,0,0,.9),0 26px 40px -30px rgba(0,0,0,.6)}
+.ag-blatt::before,.ag-blatt::after{content:"";position:absolute;pointer-events:none;border:1px solid rgba(150,125,64,.5);border-radius:clamp(14px,1.6vw,24px);inset:clamp(10px,1.1vw,16px)}
+.ag-blatt::after{inset:clamp(15px,1.5vw,22px);border-color:rgba(150,125,64,.22);border-radius:clamp(11px,1.3vw,19px)}
+.ag-r__n{margin:0 0 12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:#967d40}
+.vt-r{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(26px,3.4vw,64px);align-items:start}
+.vt-r__t h3{margin:0;font-family:var(--cs);font-weight:400;font-size:clamp(1.9rem,2.7vw,2.9rem);line-height:1.08;color:var(--ct)}
+.vt-r__lead{margin:16px 0 0;max-width:40ch;font-family:var(--cs);font-size:clamp(1.24rem,1.5vw,1.6rem);line-height:1.48;color:var(--ct)}
+.vt-r__lead b{font-weight:400;color:#8a6f35;font-variant-numeric:tabular-nums}
+.vt-gegen{margin-top:clamp(24px,2.8vw,40px);padding:clamp(20px,2.2vw,30px);border-radius:18px;background:linear-gradient(180deg,#0f2a55,#0b1f40);color:#fbf6ea;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 0 0 1px rgba(220,198,143,.5),0 30px 40px -30px rgba(6,20,43,.8)}
+.vt-gegen .ag-r__n{color:var(--cg)}
+.vt-gegen__z{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:9px 0;border-bottom:1px solid rgba(220,198,143,.2);font-family:var(--cs);font-size:clamp(1.04rem,1.14vw,1.2rem)}
+.vt-gegen__z b{font-weight:400;font-variant-numeric:tabular-nums}
+.vt-gegen__z i{font-style:normal}
+.vt-gegen__z.rs--an{color:var(--cg)}
+.vt-gegen__z:last-of-type{border-bottom:0}
+.vt-gegen__satz{margin:12px 0 0;padding-top:14px;border-top:1px solid rgba(220,198,143,.5);font-family:var(--cs);font-size:clamp(1rem,1.08vw,1.12rem);line-height:1.5;color:rgba(251,246,234,.86)}
+.vt-gr__k{margin-top:clamp(24px,2.8vw,38px)}
+.vt-gr{margin:0;padding:0;list-style:none}
+.vt-gr li{position:relative;padding:12px 0 12px 30px;border-bottom:1px solid rgba(150,125,64,.22)}
+.vt-gr li:last-child{border-bottom:0}
+.vt-gr li::before{content:"";position:absolute;left:4px;top:1.15em;width:12px;height:6px;border-left:2px solid #8a6f35;border-bottom:2px solid #8a6f35;transform:rotate(-45deg)}
+.vt-gr b{display:block;font-family:var(--cs);font-weight:400;font-size:clamp(1.1rem,1.2vw,1.26rem);color:var(--ct)}
+.vt-gr span{display:block;margin-top:3px;font-family:var(--cs);font-size:clamp(.98rem,1.04vw,1.08rem);line-height:1.5;color:rgba(12,21,38,.76)}
+.vt-r__k{margin:0 0 14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#967d40}
+.vt-feld{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 18px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(150,125,64,.22)}
+.vt-feld:last-of-type{border-bottom:0}
+.vt-feld__l span{display:block;font-family:var(--cs);font-size:clamp(1.14rem,1.24vw,1.32rem);line-height:1.3;color:var(--ct)}
+.vt-feld__l small{display:block;margin-top:4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#967d40}
+.vt-feld__w{display:flex;align-items:baseline;gap:8px;min-width:8.6em;padding:9px 16px 9px 14px;border-radius:12px;background:rgba(255,255,255,.72);box-shadow:inset 0 1px 2px rgba(60,40,10,.08),inset 0 0 0 1px rgba(150,125,64,.42);cursor:text;transition:box-shadow .3s}
+.vt-feld__w:focus-within{box-shadow:inset 0 1px 2px rgba(60,40,10,.08),inset 0 0 0 1.5px #967d40}
+.vt-feld__w input{flex:1 1 auto;width:6.5em;min-width:0;appearance:none;-webkit-appearance:none;background:transparent;border:0;padding:0;text-align:right;font-family:var(--cs);font-size:clamp(1.6rem,1.9vw,2rem);line-height:1.1;color:var(--ct)}
+.vt-feld__w input:focus{outline:0;color:#6d5a2c}
+.vt-feld__w em{flex:none;font-family:var(--cs);font-style:italic;font-size:clamp(1rem,1.06vw,1.1rem);color:rgba(12,21,38,.62)}
+.vt-r__n{margin:14px 0 0;font-family:var(--cs);font-size:clamp(.96rem,1vw,1.04rem);line-height:1.5;color:rgba(12,21,38,.66)}
+.vt-ergebnis{margin-top:clamp(18px,2vw,26px);padding:clamp(18px,2vw,26px) clamp(20px,2.2vw,28px);border-radius:18px;background:linear-gradient(180deg,#fbf3e2,#f0e3c4);box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(150,125,64,.5)}
+.vt-r__u{margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid rgba(150,125,64,.3);font-family:var(--cs);font-style:italic;font-size:clamp(1rem,1.06vw,1.1rem);color:rgba(12,21,38,.7)}
+.vt-r__u b{font-weight:400;font-style:normal;color:var(--ct)}
+.vt-erg{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding:8px 0}
+.vt-erg+.vt-erg{border-top:1px solid rgba(150,125,64,.22)}
+.vt-erg b{font-family:var(--cs);font-weight:400;font-size:clamp(2.4rem,3.2vw,3.4rem);line-height:1;color:#967d40;font-variant-numeric:tabular-nums}
+.vt-erg span{font-family:var(--cs);font-style:italic;font-size:clamp(1.1rem,1.2vw,1.3rem);color:#967d40}
+.vt-erg small{flex-basis:100%;margin:0;font-family:var(--cs);font-size:clamp(1.02rem,1.08vw,1.14rem);letter-spacing:0;text-transform:none;color:rgba(12,21,38,.78)}
+.vt-erg small span{font-size:inherit;font-style:normal;color:inherit}
+.vt-erg--gross{padding-top:14px}
+.vt-erg--gross b{font-size:clamp(2.8rem,3.8vw,4rem)}
+@media(max-width:900px){.vt-r{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.vt-feld{grid-template-columns:1fr}.vt-feld__w{min-width:0}.ag-blatt{padding:30px 20px}}
+.wr__kn{justify-content:flex-start}
+
+/* Carlton-Raum vor «Wenn Sie mehr sehen möchten»: Platz für die Rundung, sonst deckt sie die Namen unter den sieben Stücken (Robert 17.10.2026) */
+.raum--haus:has(+ .raum--mehr){padding-bottom:calc(var(--rund) + clamp(26px,4vh,46px))}
+.raum--mehr{background:var(--papier);color:var(--tinte);min-height:0;margin-top:calc(var(--rund)*-1);border-radius:var(--rund) var(--rund) 0 0;padding-top:var(--abschnitt);padding-bottom:var(--abschnitt);text-align:center}
+.mr{justify-items:center}
+.mr .lauf{margin-top:clamp(18px,2.4vw,30px);max-width:52ch;margin-inline:auto}
+.mks{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,1.4vw,20px);margin-top:clamp(26px,3vw,44px)}
+.mk{display:grid;justify-items:center;gap:6px;min-width:min(100%,230px);padding:clamp(20px,2vw,28px) clamp(22px,2.2vw,32px);border-radius:24px;background:var(--hn);color:#ffffff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(255,255,255,.08),0 26px 34px -22px rgba(17,18,33,.7)}
+.mk__z{height:38px;width:auto;max-width:120px;color:var(--hg);margin-bottom:6px}
+.mk b{font-family:var(--hf);font-weight:var(--hw,400);font-size:1.3rem;line-height:1.15}
+.mk small{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hg)}
+.raum--mehr .kn-reihe{justify-content:center;margin-top:clamp(26px,3vw,40px)}
+button.kn{border:0;cursor:pointer;font:inherit}
+.mr__kn[aria-expanded="true"] i{transform:rotate(-90deg)}
+.mr__kn[aria-expanded="false"] i{transform:rotate(90deg)}
+
+.tms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.2vw,16px);margin-top:clamp(22px,3vh,34px);max-width:640px}
+.tm{position:relative;display:grid;gap:2px;padding:16px 46px 16px 18px;border-radius:18px;color:var(--tinte);background:linear-gradient(180deg,#fdfaf5,#efe6dc 60%,#e6d9cc);
+  box-shadow:inset 0 1px 0 #ffffff,inset 0 -2px 0 rgba(126,90,61,.3),0 18px 26px -16px rgba(0,0,0,.8);transition:transform .6s var(--e2)}
+.tm:hover{transform:translateY(-2px)}.tm:active{transform:translateY(1px) scale(.98)}
+.tm b{font-family:var(--serif);font-weight:600;font-size:1.12rem}
+.tm span{font-size:.98rem;color:rgba(17,20,33,.78)}
+.tm small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:rgba(17,20,33,.62)}
+.tm i{position:absolute;right:12px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;display:grid;place-items:center;background:var(--tinte);color:#ffffff}
+.tm i svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:1.6}
+.tms--zwei{grid-template-columns:repeat(2,minmax(0,1fr));max-width:560px}
+.tms--zwei .tm span{overflow-wrap:anywhere}
+@media(max-width:520px){.tms--zwei{grid-template-columns:minmax(0,1fr)}}
+.tms__n{margin-top:16px;max-width:52ch;font-size:1rem;line-height:1.6;color:rgba(255,255,255,.74)}
+.tms__n a{color:#ffffff;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+@media(max-width:620px){.tms{grid-template-columns:minmax(0,1fr)}}
+
+/* Impressum und Datenschutz */
+body.ip{background:var(--papier);color:var(--tinte)}
+.ip-s{max-width:760px;margin:0 auto;padding:clamp(40px,7vw,96px) var(--rand) clamp(60px,8vw,120px)}
+.ip-z{display:inline-flex;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,20,33,.7)}
+.ip-z:hover{color:var(--tinte)}
+.ip h1{margin-top:clamp(26px,3vw,40px);font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,4.4vw,3.4rem);line-height:1.06;letter-spacing:-.02em}
+.ip-a{margin-top:clamp(34px,4vw,56px);padding-top:clamp(20px,2.4vw,30px);border-top:1px solid rgba(17,20,33,.16)}
+.ip-a h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,2.4vw,2rem);margin-bottom:10px}
+.ip-k{margin-top:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#7a6250}
+.ip-a p:not(.ip-k){margin-top:6px;font-size:1.04rem;line-height:1.66;color:rgba(17,20,33,.86)}
+.ip-a a{text-decoration:underline;text-underline-offset:3px;word-break:break-word}
+
+.raum--mehr .lauf{color:rgba(20,21,31,.84)}
+.wr,.mr{grid-template-columns:minmax(0,1fr)}
+.rs span{white-space:nowrap}
+@media(max-width:420px){.rs{font-size:.94rem}.rs b{font-size:1.02rem}}
+@media(max-width:620px){.tm{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:12px 48px 12px 16px}.tm small{flex-basis:100%}}
+
+/* ---------- Je Haus: Fächer «Alles zu diesem Haus» statt der Kachelreihe (Robert 17.10.2026 abends: «so, wie wir das auf der Internetseite auch gemacht haben …
+   wo dann diese 3D-Elemente so nebeneinander sind und man kann so von links nach rechts gehen»). Vorbild: Fuss der Carlton-Werkbank (fuss_faecher.py).
+   Vorn das gewählte Stück, je zwei dahinter kleiner und leiser. Nur transform und opacity; senkrechtes Scrollen läuft immer an die Seite weiter (kein eigenes Scrollen, kein Mausrad). ---------- */
+.raum--haus{overflow-x:clip}
+@media(min-width:1040px){.raum--haus:not(.raum--familie) .hausr{grid-template-rows:minmax(max(480px,calc(100svh - 230px)),auto) auto}}
+.gang--fa{padding-top:clamp(26px,4.4vh,48px)}
+.gang--fa .gang__h{justify-content:center;margin-bottom:clamp(4px,1vh,12px)}
+.gang--fa .gang__h::before{content:'';flex:none;width:clamp(40px,5vw,84px);height:1px;background:currentColor;opacity:.7}
+.fa{position:relative;outline:none}
+.fa__b{position:relative;height:clamp(260px,31vw,470px);touch-action:pan-y}
+.fa__b::before{content:'';position:absolute;left:50%;top:50%;width:min(70vw,760px);height:min(50vw,520px);transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,255,255,.09),rgba(255,255,255,.03) 55%,transparent)}
+.fa .fblatt{position:absolute;left:50%;top:0;height:100%;aspect-ratio:1;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  --x:0%;--s:.5;--o:0;--ty:0px;transform:translate(calc(-50% + var(--x)),var(--ty)) scale(var(--s));opacity:var(--o);pointer-events:none;
+  transition:transform .95s cubic-bezier(.2,.8,.2,1),opacity .6s cubic-bezier(.2,.8,.2,1)}
+.fa .fblatt img{display:block;width:100%;height:100%;object-fit:contain}
+.fa .fblatt[data-p="0"]{--x:0%;--s:1;--o:1;z-index:5;pointer-events:auto}
+.fa .fblatt[data-p="-1"]{--x:-76%;--s:.64;--o:.55;z-index:4;pointer-events:auto}
+.fa .fblatt[data-p="1"]{--x:76%;--s:.64;--o:.55;z-index:4;pointer-events:auto}
+.fa .fblatt[data-p="-2"]{--x:-132%;--s:.44;--o:.22;z-index:3;pointer-events:auto}
+.fa .fblatt[data-p="2"]{--x:132%;--s:.44;--o:.22;z-index:3;pointer-events:auto}
+.fa .fblatt[data-p="-3"]{--x:-176%}.fa .fblatt[data-p="3"]{--x:176%}
+.fa .fblatt[data-p="-4"]{--x:-200%}.fa .fblatt[data-p="4"]{--x:200%}
+/* Beim Hereinscrollen fächern die Stücke aus der Mitte nach links und rechts auf, wie im Fuss der Carlton-Werkbank (Robert 18.10.2026: «normalerweise ist der Effekt, wenn ich reinscrolle, dass das so nach links und rechts rausfliegt»); weiche Kurve ohne Federn */
+.fa:not(.da) .fblatt[data-p]{--x:0%;--s:.7;--o:0}
+.fa.da:not(.steht) .fblatt{transition:transform 1.7s var(--sw),opacity .6s cubic-bezier(.2,.8,.2,1)}
+.fa__fuss{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:clamp(14px,3vw,50px);max-width:820px;margin:clamp(6px,1vh,14px) auto 0}
+.fa__texte{display:grid;text-align:center}
+.fa__texte>div{grid-area:1/1;display:flex;flex-direction:column;align-items:center;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .4s ease,transform .6s ease,visibility 0s .45s}
+.fa__texte>div.an{opacity:1;visibility:visible;transform:none;transition:opacity .6s ease .15s,transform .8s ease .15s}
+.fa__texte h3{margin:0;font-family:var(--hf);font-weight:var(--hw,400);font-size:clamp(1.6rem,2.4vw,2.5rem);line-height:1.1;color:#ffffff}
+.fa__texte h3::after{content:'';display:block;width:84px;height:1px;margin:clamp(12px,1.3vw,16px) auto 0;background:var(--hg);opacity:.8}
+.fa__texte p{margin:clamp(12px,1.2vw,16px) auto 0;max-width:46ch;font-size:clamp(1rem,1.1vw,1.12rem);line-height:1.56;color:rgba(255,255,255,.8)}
+.fa__texte .kn{margin-top:clamp(16px,1.8vw,24px)}
+.fa__zahl{margin-top:clamp(14px,2vh,24px);text-align:center;font-family:var(--mono);font-size:.8rem;letter-spacing:.24em;color:var(--hg);color:color-mix(in srgb,var(--hg) 76%,#ffffff)}
+@media(max-width:1039px){.gang--fa .gang__h{grid-area:h;margin-top:22px}.gang--fa .fa{grid-area:l}}
+@media(max-width:700px){
+  .fa__b{height:min(86vw,380px)}
+  .fa .fblatt[data-p="-1"]{--x:-64%;--s:.54;--o:.42}.fa .fblatt[data-p="1"]{--x:64%;--s:.54;--o:.42}
+  .fa .fblatt[data-p="-2"],.fa .fblatt[data-p="2"]{--o:0;pointer-events:none}
+  .fa__fuss{grid-template-columns:1fr 1fr;justify-items:center;row-gap:18px}
+  .fa__texte{grid-column:1/-1;grid-row:1}
+  .fa__fuss>button:first-of-type{justify-self:end}.fa__fuss>button:last-of-type{justify-self:start}
+}
+@media(prefers-reduced-motion:reduce){.fa .fblatt,.fa__texte>div{transition:none}}
+
+/* ---------- Einschweben ohne Ausholen (Robert 17.10.2026 21:19 zu Handys und Kacheln unter «Gleiches Zimmer, gleiche Nacht.»: «direkt reingeflogen … nicht so zurückfedern
+   und dann nach vorne … direkt richtig geil reinschweben. So richtig edel und luxuriös.»). Kein Verkleinern am Anfang, eine weiche Kurve ohne Ruck,
+   etwas länger: das Stück gleitet in einem Zug von unten an seinen Platz. Gilt für alle schwebenden Stücke der Seite. Nur transform (und das Einblenden, wo es vorher schon war). ---------- */
+:root{--sw:cubic-bezier(.33,1,.68,1)}
+.js [data-e="schweb"]{transform:translateY(84px);transition:opacity .9s var(--e2),transform 1.6s var(--sw);transition-delay:calc(var(--i,0)*120ms + .15s)}
+.js .raum--warum [data-e="schweb"]{transition:transform 1.6s var(--sw);transition-delay:calc(var(--i,0)*120ms + .1s)}
+.js .raum--warum .ph3[data-e]{transform:translateY(150px);transition:transform 1.8s var(--sw);transition-delay:calc(var(--i,0)*150ms + .1s)}
+.js .raum--warum.offen [data-e="schweb"]:not(.da){transform:translateY(84px)}
+.js .raum--warum.offen .ph3[data-e]:not(.da){transform:translateY(150px)}
+.js .raum--warum [data-e="schweb"].da{transform:none}
+.js .raum:not(.offen) [data-e]{transition:none}
+@media(prefers-reduced-motion:reduce){.js [data-e="schweb"],.js .raum--warum [data-e]{transform:none!important;transition:none!important}}
+
+/* ---------- Rechnung bündig (Robert 17.10.2026 21:26: «den Bereich bitte noch schön und bündig formatieren»): beide Spalten enden auf einer Linie
+   (das Ergebnis füllt die rechte Spalte bis unten), alle Eingabefelder gleich breit mit gleicher linker Kante, die kleinen Überschriften einheitlich in Versalien. ---------- */
+#rechner{align-items:stretch}
+#rechner .vt-r__r{display:flex;flex-direction:column}
+#rechner .vt-ergebnis{flex:1 1 auto;display:flex;flex-direction:column}
+#rechner .vt-ergebnis .vt-erg{flex:1 1 auto;align-content:center}
+#rechner .vt-feld__w{box-sizing:border-box;width:clamp(178px,15vw,226px);min-width:0}
+#rechner .vt-feld__w input{width:auto}
+#rechner .ag-r__n{text-transform:uppercase}
+@media(max-width:900px){#rechner .vt-ergebnis{flex:none}}
+@media(max-width:520px){#rechner .vt-feld{grid-template-columns:minmax(0,1fr)}#rechner .vt-feld__w{width:100%}#rechner .vt-gegen{padding:18px 14px}#rechner .vt-gegen__z{gap:8px;font-size:clamp(.82rem,3.9vw,.98rem)}#rechner .vt-gegen__z{flex-wrap:wrap}#rechner .vt-gegen__z span,#rechner .vt-gegen__z b{white-space:nowrap}#rechner .vt-gegen__z b{margin-left:auto}}
+
+/* Unterschrift überall wie im Rivage-Brief (Robert 17.10.2026 ~23:20: «dass das Bild richtig sitzt, groß genug ist, … dass meine handschriftliche [Unterschrift] eingefügt ist»): Porträt in Rivage-Grösse, im Zitat rechts im Text, Handschrift über Name und Ort rechtsbündig */
+.wort__b{float:right;width:clamp(124px,10.6vw,196px);margin:6px 6px 4px clamp(18px,1.8vw,26px);shape-margin:18px}
+.wort__n{flex-direction:column;align-items:flex-end;text-align:right;gap:2px}
+.wort__sig{display:block;width:clamp(150px,16.5vw,244px);height:auto;margin:0 -4px 2px 0;transform:rotate(-5deg);pointer-events:none}
+.gesp__ich{width:clamp(124px,10.6vw,196px);shape-margin:18px}
+.gesp__sig{width:clamp(150px,16.5vw,244px)}
+@media(max-width:600px){.wort__b,.gesp__ich{width:112px;shape-margin:14px}}
+.gesp .tms{clear:both}   /* Karten bleiben neben dem grösseren Porträt in voller Breite */
+/* Schluss am Handy: Handschrift ganz in der Spalte, rechts bündig mit den Karten, ruhig gesetzt (Robert 17.10.2026: «auf telefn sieht noch scheiße aus») */
+@media(max-width:600px){.gesp .gruss-u{gap:6px;padding-right:2px}.gesp__sig{width:clamp(132px,40vw,160px);margin:6px 4px 6px 0}.gesp .gruss-u small{margin-right:-.15em}}
+/* Unterschrift ruhiger wie im Rivage-Brief (Robert 17.10.2026: «es ist zu weit rechts, zu weit oben, ist auch alles zu groß. Mein Bild hängt fast auf der Linie»):
+   Porträt mit Luft über der Linie, Handschrift und Name kleiner, als Gruppe mittig untereinander und vom rechten Rand abgerückt, mehr Abstand unter der Linie */
+.wort__b{margin-bottom:clamp(22px,2.2vw,32px)}
+.wort__n{display:grid;justify-content:end;justify-items:center;text-align:center;gap:4px;margin-top:clamp(10px,1.2vw,18px);padding:clamp(24px,2.6vw,38px) clamp(16px,3.6vw,56px) 0 0}
+.wort__sig{width:clamp(118px,10vw,160px);margin:0 0 4px}
+.wort__n b{font-size:clamp(1.1rem,1.2vw,1.26rem)}
+.wort__n span{font-size:.92rem}
+.gesp .gruss-u{display:grid;justify-content:end;justify-items:center;text-align:center;gap:4px;padding-right:clamp(16px,3.6vw,56px)}
+.gesp__sig{width:clamp(118px,10vw,160px);margin:2px 0 4px}
+@media(max-width:600px){.gesp .gruss-u{padding-right:16px}.gesp__sig{width:124px;margin:4px 0}.wort__n{padding-right:16px}.wort__sig{width:124px}}
+
+/* Handys und Kacheln unter «Gleiches Zimmer, gleiche Nacht.» schweben sofort beim Scrollen ein, ohne Warten und ohne Nachfedern (Robert 18.10.2026 00:20:
+   «Da die Telefone und die Kacheln müssen direkt reingeschwebt kommen. Wenn ich scrolle, jetzt warten die noch einmal kurz und machen diesen federnden Effekt»):
+   kein Startverzug, kürzerer Weg, eine Kurve, die gleichmässig ausläuft statt lange nachzuziehen. Nur transform. */
+.js .raum--warum [data-e="schweb"]{transform:translateY(56px);transition:transform 1.05s cubic-bezier(.25,.6,.3,1);transition-delay:calc(var(--i,0)*30ms)}
+.js .raum--warum .ph3[data-e]{transform:translateY(80px);transition:transform 1.1s cubic-bezier(.25,.6,.3,1);transition-delay:calc(var(--i,0)*30ms)}
+.js .raum--warum.offen [data-e="schweb"]:not(.da){transform:translateY(56px)}
+.js .raum--warum.offen .ph3[data-e]:not(.da){transform:translateY(80px)}
+.js .raum--warum [data-e="schweb"].da{transform:none}
+/* Fenster «Eine Seite, die zu allen vier Häusern führt.»: die vier Zeichen ein Stück höher (Robert 18.10.2026 00:20: «in den Fenster möchte ich, dass die Logos alle noch ein Stückchen nach oben gehen»), der Satz bleibt stehen */
+.bruch--vier .vier--spalten{position:relative;top:calc(-1 * clamp(28px,6.5vh,64px))}
+@media(max-width:760px){.bruch--vier .vier--spalten{top:-22px}}
+
+/* Je Haus unter «Website ansehen» auch «Werkbank ansehen», beide gleich breit und mittig in ihrem Bereich (Robert 18.10.2026 11:54: «dass da neben den Website ansehen Buttons darunter auch noch immer ein Werkbank ansehen Button ist … Und die Buttons immer bitte mittig in ihren Bereichen») */
+.st-t .kn-reihe--haus{display:grid;grid-template-columns:auto;justify-content:center;gap:12px}
+.st-t .kn-reihe--haus .kn{justify-content:space-between}
+/* Die beiden Knöpfe je Haus nebeneinander in einer Zeile, gleich hoch, mittig; nur wenn die Zeile zu schmal ist, untereinander (Robert 18.10.2026 12:52: «die buttons nebeneinander»). Beim Berühren springt nichts. */
+.st-t .kn-reihe--haus{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:10px}
+.st-t .kn-reihe--haus .kn{flex:0 0 auto;white-space:nowrap}
+.st-t .kn-reihe--haus .kn:hover,.st-t .kn-reihe--haus .kn:active{transform:none;animation:none}
+.st-t .kn-reihe--haus{gap:8px}
+.st-t .kn-reihe--haus .kn{padding-left:18px;gap:10px;letter-spacing:.11em}
+@media(max-width:1399px){.st-t .kn-reihe--haus .kn{font-size:11.5px;letter-spacing:.08em;padding-left:15px;gap:9px}.st-t .kn-reihe--haus .kn i{width:36px;height:36px}}
+/* Drei Kacheln, Fassung E (Robert 18.10.2026: «e»): eine grosse Kachel mit dem Chat der vier Häuser, daneben zwei kleine ohne Bild, mittig im Kasten */
+@media(min-width:900px){
+  .belege--gross{grid-template-columns:1.45fr 1fr;grid-template-rows:auto auto}
+  .belege--gross>li:first-child{grid-row:1/3}
+  .belege--gross>li:not(:first-child){align-content:center}
+}
+.bl__b--vierchat{aspect-ratio:auto;padding:clamp(16px,2.2vw,30px);align-items:center}
+.bl__b--vierchat .vierchat{width:100%}
+
+/* Block unter den Telefonen, Fassung B (Robert 18.10.2026: «b»), aus _vorschlag/nutzen-block/block.css */
+.nb{margin-top:clamp(30px,3.4vw,52px)}
+.nb h3{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,2.6vw,2.6rem);line-height:1.1;color:#fff;text-wrap:balance}
+.nb h3 em{font-style:normal;color:var(--creme)}
+.nb-q{margin:clamp(16px,1.8vw,24px) 0 0;font-family:var(--mono);font-size:11px;line-height:1.7;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,219,206,.62);max-width:none}
+.nb-drei{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,28px);align-items:stretch}
+.nb-k{display:flex;flex-direction:column;padding:12px 12px clamp(22px,2.2vw,30px);border-radius:clamp(24px,2.4vw,34px);background:linear-gradient(180deg,#1f2240 0%,#171930 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 0 0 1px rgba(235,219,206,.12),0 34px 50px -34px rgba(0,0,0,.95)}
+.nb-k>p{margin-inline:clamp(10px,1.2vw,18px);max-width:none}
+.nb-k__b{display:block;aspect-ratio:1/1;border-radius:clamp(16px,1.7vw,24px);overflow:hidden;margin-bottom:clamp(18px,2vw,26px)}
+.nb-k__b--chat img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0}
+.nb-k__b--gruss{display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,.8vw,12px);padding:0 clamp(18px,2vw,30px);background:linear-gradient(180deg,#f7f3ee,#ebdbce)}
+.nb-k__b--gruss b{font-family:var(--hf),Georgia,serif;font-weight:700;font-size:clamp(2.2rem,3.9vw,4rem);line-height:1.02;color:#111421}
+.nb-k__b--gruss b:nth-child(2){padding-left:12%}.nb-k__b--gruss b:nth-child(3){padding-left:24%}
+.nb-k__b--vier{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:#0b0d18}
+.nb-k__b--vier img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.nb-k__z{display:flex;align-items:baseline;gap:clamp(10px,1vw,14px);margin-top:0;margin-bottom:0}
+.nb-k__z b{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,4vw,4.2rem);line-height:.92;letter-spacing:-.05em;color:var(--creme)}
+.nb-k__z span{font-family:var(--serif);font-weight:500;font-size:clamp(1.08rem,1.25vw,1.26rem);line-height:1.2;color:#fff}
+.nb-k__s{margin-top:10px;font-size:clamp(.98rem,1.04vw,1.06rem);line-height:1.55;color:rgba(255,255,255,.78)}
+@media(max-width:1020px){.nb-drei{grid-template-columns:minmax(0,1fr)}.nb-k__b{aspect-ratio:16/10}}
+@media(max-width:620px){.nb-k__b--gruss b{font-size:clamp(2rem,10vw,2.8rem)}}
+.nb-drei{grid-auto-rows:1fr}
+/* Block B mit 3D-Geräten (Robert 18.10.2026 15:54: «ein 3D-Blender-Handy … leicht schräg gekippt … ein iPad mit dem offenen Chat in Französisch … ein PC mit der offenen Seite»):
+   das Gerät füllt sein Feld, kein Rahmen, der weiche Schatten ist im Bild; Handy und iPad stehen oben und laufen unten aus dem Feld */
+.nb-k__b--geraet{background:radial-gradient(90% 80% at 50% 30%,rgba(255,255,255,.07),transparent 70%)}
+.nb-k__b--geraet img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.nb-k__b--oben img{object-position:50% 0}
+@media(max-width:1020px){.nb-k__b.nb-k__b--geraet{aspect-ratio:1/1}}   /* am Handy ganzes Gerät statt Streifen */
+.tm b .tm__wa{width:1.05em;height:1.05em;margin-right:.45em;vertical-align:-.16em;opacity:.85}   /* WhatsApp-Zeichen in der Kontakt-Kachel (18.10.2026) */
+/* Geräte ganz in der Kachel, nichts abgeschnitten (Robert 18.10.2026 17:02: «Die Geräte sind unten abgeschnitten») */
+.nb-k__b--geraet img{object-fit:contain;object-position:50% 50%}
+.nb-k__z b[data-zahl]{min-width:0!important;font-variant-numeric:tabular-nums}   /* Abstand Zahl–Wort wie vor dem Hochzählen */
+/* iPhone ein kleines Stück tiefer, optisch mittig zwischen Kachelrand und Zahl (Robert 18.10.2026 17:44: «Telefon etwas tiefer setzen in der Kachel, kleines Stück») */
+.nb-k__b--tiefer{overflow:visible}.nb-k__b--tiefer img{transform:translateY(4%)}
+/* Kein Kasten hinter den Geräten (Robert 18.10.2026 17:55: «man sieht da noch die Schattenkanten»): kein Hintergrund am Feld, der Schatten läuft im Bild weich aus */
+.nb-k__b.nb-k__b--geraet{background:none}
+/* Kontakt: Briefschluss Fassung C (Robert 18.10.2026 18:17: «C, aber rechts zentriert in dem Bereich»): feine Linie über die ganze Spalte, darunter kleines Porträt mit Gruss,
+   Handschrift und Name; der Block steht in der rechten Hälfte der Spalte, mittig unter der rechten Kachel. Am Handy mittig. */
+.gesp__k>div:first-child{max-width:560px}
+.gesp .tms{max-width:none}
+.kc__u{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(10px,1.2vw,16px);margin-top:clamp(30px,4vh,44px);padding-top:clamp(22px,3vh,30px);border-top:1px solid rgba(235,219,206,.18)}
+.kc__in{grid-column:2;justify-self:unsafe center;width:max-content;display:flex;align-items:center;gap:18px}
+.kc__ich{flex:none;width:92px;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4px #111421,0 0 0 5px rgba(235,219,206,.34),0 18px 24px -14px rgba(0,0,0,.8)}
+.kc__ich img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.kc__u p{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin:0;max-width:none}
+.kc__u p span{font-size:1rem;color:rgba(255,255,255,.74)}
+.kc__sig{display:block;width:136px;height:auto;margin:0 0 0 -4px;transform:rotate(-4deg)}
+.kc__u b{font-size:1.08rem;font-weight:500;color:#fff}
+.kc__u small{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--messing);white-space:nowrap}
+@media(max-width:520px){.kc__u{grid-template-columns:1fr}.kc__in{grid-column:1}}
+.kc__in{gap:14px}.kc__ich{width:80px}.kc__sig{width:124px}.kc__u small{letter-spacing:.12em}   /* passt in die halbe Spalte, damit die Mitte genau unter der rechten Kachel liegt */
+/* Briefschluss C in der rechten Hälfte des Abschnitts (Oberchef 18.10.2026: «mittig in der rechten Hälfte des Abschnitts»): unter der Häuserliste, mittig in dieser Spalte */
+.gesp__r{display:grid;align-content:center}
+.gesp__r .kc__u{grid-template-columns:1fr;border-top:0;padding-top:0;margin-top:clamp(30px,4vh,44px)}
+.gesp__r .kc__in{grid-column:1;justify-self:center}
+.gesp__r .kc__ich{width:92px}.gesp__r .kc__sig{width:136px}.gesp__r .kc__in{gap:18px}
+/* Die drei Häuser-Kacheln gleich breit (Robert 18.10.2026 18:28 am iPhone: «Gasterntal-Kachel nicht richtig angezeigt»): am Rechner drei gleiche Spalten, am Handy volle Breite */
+.mks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:860px;margin-inline:auto}
+.mk{min-width:0}
+@media(max-width:760px){.mks{grid-template-columns:minmax(0,1fr);max-width:none}}
+@media(max-width:760px){.mks{width:100%;justify-self:stretch;align-self:stretch}}
+/* Zahlen der Rechnung mit festen Ziffernbreiten, damit beim Hochzählen nichts umbricht oder springt (Robert 18.10.2026 19:10) */
+#rechner [data-r],#rechner [data-rs] i,#rechner .rf input{font-variant-numeric:tabular-nums}
+#rechner .vt-erg,#rechner .vt-gegen__z{contain:layout paint}
